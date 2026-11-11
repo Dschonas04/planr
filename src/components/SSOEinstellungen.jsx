@@ -56,7 +56,7 @@ export default function SSOEinstellungen() {
     <>
       <p className="board-hint">
         Zusätzlich zur Anmeldung mit Passwort. Konten werden über die vom Anbieter bestätigte E-Mail-Adresse
-        zugeordnet und bei Bedarf angelegt.
+        zugeordnet. Neue Konten entstehen nur bei offener Registrierung oder gesetzter Freigabeliste.
       </p>
       {stand.notaus && <p className="board-error">Per PLANR_SSO_AUS=1 abgeschaltet.</p>}
       <form className="konto-form" onSubmit={speichern}>

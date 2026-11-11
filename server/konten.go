@@ -61,6 +61,9 @@ type Konto struct {
 	Rolle    string `json:"rolle"`
 	Gesperrt bool   `json:"gesperrt"`
 	Angelegt int64  `json:"angelegt"`
+	// SSO ist "Aussteller|Kennung" des Anbieter-Kontos, an das dieses Konto
+	// gebunden ist. Leer: noch nie per SSO angemeldet.
+	SSO string `json:"sso,omitempty"`
 }
 
 // Oeffentlich ist die Sicht auf ein Konto, die das Netz verlassen darf.
@@ -500,26 +503,66 @@ func saubererName(roh string) string {
 // SSOKonto liefert das Konto zur E-Mail-Adresse oder legt eines an. Es bekommt
 // ein zufälliges Passwort, das niemand kennt; wer eines möchte, setzt es im
 // Profil oder lässt es von der Verwaltung setzen.
-func (k *Konten) SSOKonto(email, name string) (*Konto, bool, error) {
+//
+// Beim ersten SSO-Login wird das Konto an bindung (Aussteller|Kennung)
+// gebunden; ein anderes Anbieter-Konto mit derselben Adresse kommt danach nicht
+// mehr hinein. Mit fremdBekannt (offene Registrierung: jeder konnte das Konto
+// vorab anlegen) verliert ein bestehendes Konto dabei Passwort und Sitzungen,
+// damit niemand über ein vorab angelegtes Passwort mitliest. Neue Konten legt
+// SSO nur mit anlegen an (oder wenn es noch gar keines gibt).
+func (k *Konten) SSOKonto(email, name, bindung string, fremdBekannt, anlegen bool) (*Konto, bool, error) {
 	email, err := normEmail(email)
 	if err != nil {
 		return nil, false, err
 	}
 	k.mu.Lock()
 	for _, konto := range k.konten {
-		if konto.Email == email {
-			kopie := *konto
-			k.mu.Unlock()
-			if kopie.Gesperrt {
-				return nil, false, ErrKontoGesperrt
-			}
-			return &kopie, false, nil
+		if konto.Email != email {
+			continue
 		}
+		if konto.Gesperrt {
+			k.mu.Unlock()
+			return nil, false, ErrKontoGesperrt
+		}
+		if konto.SSO != "" && konto.SSO != bindung {
+			k.mu.Unlock()
+			return nil, false, ErrSSOFremd
+		}
+		if konto.SSO == "" {
+			konto.SSO = bindung
+			if fremdBekannt {
+				if hash, err := bcrypt.GenerateFromPassword([]byte(zufall(24)), bcrypt.DefaultCost); err == nil {
+					konto.Hash = string(hash)
+				}
+				k.sitzungenBeenden(konto.ID)
+			}
+			k.speichernKonten()
+		}
+		kopie := *konto
+		k.mu.Unlock()
+		return &kopie, false, nil
 	}
+	leer := len(k.konten) == 0
 	k.mu.Unlock()
+	if !anlegen && !leer {
+		return nil, false, ErrSSOKeinKonto
+	}
 	konto, err := k.Anlegen(email, name, zufall(24), RolleNutzer)
 	if err != nil {
 		return nil, false, err
 	}
+	k.mu.Lock()
+	if g, ok := k.konten[konto.ID]; ok {
+		g.SSO = bindung
+		k.speichernKonten()
+	}
+	k.mu.Unlock()
+	konto.SSO = bindung
 	return konto, true, nil
 }
+
+// ErrSSOFremd: das Konto gehört schon zu einem anderen Anbieter-Konto.
+var ErrSSOFremd = errors.New("Dieses Konto ist bereits mit einer anderen SSO-Anmeldung verbunden.")
+
+// ErrSSOKeinKonto: es gibt kein Konto, und anlegen darf SSO hier keines.
+var ErrSSOKeinKonto = errors.New("Für diese Adresse gibt es kein Konto. Die Verwaltung kann eines anlegen.")

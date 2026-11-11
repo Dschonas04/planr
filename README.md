@@ -170,7 +170,9 @@ einzelnen Browser.
   OpenID-Connect-Anbieter wie Keycloak ein (Aussteller, Client-ID,
   Client-Geheimnis, auf Wunsch erlaubte Konten). Die Anmeldeseite bietet dann
   *Mit SSO anmelden* an; das Konto wird über die vom Anbieter bestätigte
-  E-Mail-Adresse gefunden oder angelegt. Weiterleitung beim Anbieter:
+  E-Mail-Adresse gefunden und beim ersten Mal an das Anbieter-Konto gebunden.
+  Neue Konten legt SSO nur an, wenn die Registrierung offen ist oder eine
+  Freigabeliste gesetzt ist. Weiterleitung beim Anbieter:
   `https://<planr>/sso/zurueck`. `PLANR_SSO_AUS=1` schaltet SSO im Notfall ab.
 - **Speichern** – Ein Projekt auf dem Server wird kurz nach jeder Änderung
   automatisch gespeichert; die Kopfzeile zeigt den Stand.

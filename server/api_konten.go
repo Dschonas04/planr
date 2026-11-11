@@ -408,23 +408,27 @@ func (s *server) adminKonto(w http.ResponseWriter, r *http.Request) {
 // Konto wird über die E-Mail-Adresse gefunden, und nur über eine, die der
 // Anbieter als bestätigt meldet: sonst könnte sich jemand eine fremde Adresse
 // ins Profil schreiben und so in deren Konto gelangen. Gibt es noch kein Konto,
-// wird eines angelegt; wer herein darf, regelt die Freigabeliste.
+// wird eines angelegt, sofern Registrierung oder Freigabeliste das erlauben.
 func (s *server) ssoAnmelden(w http.ResponseWriter, r *http.Request, n SSONutzer) error {
 	if n.Email == "" || !n.EmailBestaetigt {
 		return errors.New("Der Anbieter meldet keine bestätigte E-Mail-Adresse.")
 	}
-	k, neu, err := s.konten.SSOKonto(n.Email, n.Name)
+	// Neue Konten nur, wenn sich ohnehin jeder registrieren darf oder die
+	// SSO-Einstellung eine Freigabeliste hat; sonst nur bestehende Konten.
+	k := s.sso.konfig()
+	anlegen := s.cfg.registrierungOffen || strings.TrimSpace(k.Erlaubt) != ""
+	konto, neu, err := s.konten.SSOKonto(n.Email, n.Name, k.Aussteller+"|"+n.Kennung, s.cfg.registrierungOffen, anlegen)
 	if err != nil {
 		return err
 	}
 	if neu {
-		logf("SSO: Konto %s angelegt", k.Email)
-		if k.Rolle == RolleAdmin {
-			if z := s.store.WaisenZuordnen(k.ID); z > 0 {
+		logf("SSO: Konto %s angelegt", konto.Email)
+		if konto.Rolle == RolleAdmin {
+			if z := s.store.WaisenZuordnen(konto.ID); z > 0 {
 				logf("%d Projekt(e) ohne Eigentuemer dem ersten Administrator zugeordnet", z)
 			}
 		}
 	}
-	s.setzeCookie(w, r, s.konten.SitzungAnlegen(k.ID))
+	s.setzeCookie(w, r, s.konten.SitzungAnlegen(konto.ID))
 	return nil
 }
