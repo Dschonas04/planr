@@ -64,6 +64,10 @@ type Konto struct {
 	// SSO ist "Aussteller|Kennung" des Anbieter-Kontos, an das dieses Konto
 	// gebunden ist. Leer: noch nie per SSO angemeldet.
 	SSO string `json:"sso,omitempty"`
+	// Selbst: über die offene Registrierung angelegt, also von irgendwem, der
+	// die Adresse kannte. Beim ersten SSO-Login verliert so ein Konto Passwort
+	// und Sitzungen.
+	Selbst bool `json:"selbst,omitempty"`
 }
 
 // Oeffentlich ist die Sicht auf ein Konto, die das Netz verlassen darf.
@@ -530,7 +534,7 @@ func (k *Konten) SSOKonto(email, name, bindung string, fremdBekannt, anlegen boo
 		}
 		if konto.SSO == "" {
 			konto.SSO = bindung
-			if fremdBekannt {
+			if fremdBekannt || konto.Selbst {
 				if hash, err := bcrypt.GenerateFromPassword([]byte(zufall(24)), bcrypt.DefaultCost); err == nil {
 					konto.Hash = string(hash)
 				}
@@ -566,3 +570,13 @@ var ErrSSOFremd = errors.New("Dieses Konto ist bereits mit einer anderen SSO-Anm
 
 // ErrSSOKeinKonto: es gibt kein Konto, und anlegen darf SSO hier keines.
 var ErrSSOKeinKonto = errors.New("Für diese Adresse gibt es kein Konto. Die Verwaltung kann eines anlegen.")
+
+// SelbstMarkieren vermerkt, dass ein Konto über die Registrierung entstand.
+func (k *Konten) SelbstMarkieren(id string) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	if konto, ok := k.konten[id]; ok {
+		konto.Selbst = true
+		k.speichernKonten()
+	}
+}

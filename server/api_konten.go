@@ -138,6 +138,9 @@ func (s *server) registrierung(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, http.StatusBadRequest, err.Error())
 		return
 	}
+	if !erstes {
+		s.konten.SelbstMarkieren(k.ID)
+	}
 	if k.Rolle == RolleAdmin {
 		if n := s.store.WaisenZuordnen(k.ID); n > 0 {
 			logf("%d Projekt(e) ohne Eigentuemer dem ersten Administrator zugeordnet", n)

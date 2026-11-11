@@ -44,6 +44,15 @@ func TestSSOKonto(t *testing.T) {
 	if _, ok := k.SitzungKonto(token); ok {
 		t.Fatal("alte Sitzung gilt noch")
 	}
+	// Früher selbst registriert, Registrierung inzwischen zu: trotzdem zurückgesetzt.
+	selbst, _ := k.Anlegen("eva@example.org", "", "passwort-123456", RolleNutzer)
+	k.SelbstMarkieren(selbst.ID)
+	if _, _, err := k.SSOKonto("eva@example.org", "", "iss|e", false, false); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := k.Pruefen("eva@example.org", "passwort-123456"); err == nil {
+		t.Fatal("Passwort eines selbst registrierten Kontos gilt noch")
+	}
 	if _, _, err := k.SSOKonto("bert@example.org", "", "iss|b", false, true); err != ErrKontoGesperrt {
 		t.Fatalf("gesperrtes Konto angemeldet: %v", err)
 	}
