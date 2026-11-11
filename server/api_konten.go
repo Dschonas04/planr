@@ -138,7 +138,9 @@ func (s *server) registrierung(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, http.StatusBadRequest, err.Error())
 		return
 	}
-	if !erstes {
+	// Das erste Konto legt der Betreiber bei der Einrichtung an, alle
+	// weiteren über die Registrierung irgendwer.
+	if k.Rolle != RolleAdmin {
 		s.konten.SelbstMarkieren(k.ID)
 	}
 	if k.Rolle == RolleAdmin {
