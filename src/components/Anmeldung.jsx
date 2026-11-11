@@ -110,9 +110,14 @@ export default function Anmeldung() {
         </button>
 
         {auth?.sso && !registrieren && (
-          <a className="knopf-sso" href="/sso/anmelden">
-            Mit SSO anmelden
-          </a>
+          <>
+            <div className="anmeldung-trenner">
+              <span>oder</span>
+            </div>
+            <a className="knopf-primaer knopf-sso" href="/sso/anmelden">
+              Mit SSO anmelden
+            </a>
+          </>
         )}
 
         {!einrichtung && auth?.registrierung && (
