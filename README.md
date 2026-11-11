@@ -1,5 +1,7 @@
 # Planr — Grundrisse und Häuser maßstabsgetreu planen
 
+<img src="docs/logo.svg" alt="" width="96" align="right">
+
 [![CI](https://github.com/Dschonas04/Planr/actions/workflows/ci.yml/badge.svg)](https://github.com/Dschonas04/Planr/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/v/tag/Dschonas04/Planr?label=Version)](CHANGELOG.md)
 [![Go 1.26](https://img.shields.io/badge/Go-1.26-00ADD8)](https://go.dev)
