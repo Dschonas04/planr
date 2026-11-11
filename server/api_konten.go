@@ -99,6 +99,7 @@ func (s *server) status(w http.ResponseWriter, r *http.Request) {
 		"einrichtung":   anzahl == 0,
 		"registrierung": anzahl == 0 || s.cfg.registrierungOffen,
 		"impressum":     impressum,
+		"sso":           s.sso.An(),
 	}
 	if s.lokal != nil {
 		antwort["desktop"] = true
@@ -401,4 +402,29 @@ func (s *server) adminKonto(w http.ResponseWriter, r *http.Request) {
 	default:
 		writeErr(w, http.StatusMethodNotAllowed, "Methode nicht erlaubt")
 	}
+}
+
+// ssoAnmelden macht aus einer Anmeldung beim SSO-Anbieter eine Sitzung. Das
+// Konto wird über die E-Mail-Adresse gefunden, und nur über eine, die der
+// Anbieter als bestätigt meldet: sonst könnte sich jemand eine fremde Adresse
+// ins Profil schreiben und so in deren Konto gelangen. Gibt es noch kein Konto,
+// wird eines angelegt; wer herein darf, regelt die Freigabeliste.
+func (s *server) ssoAnmelden(w http.ResponseWriter, r *http.Request, n SSONutzer) error {
+	if n.Email == "" || !n.EmailBestaetigt {
+		return errors.New("Der Anbieter meldet keine bestätigte E-Mail-Adresse.")
+	}
+	k, neu, err := s.konten.SSOKonto(n.Email, n.Name)
+	if err != nil {
+		return err
+	}
+	if neu {
+		logf("SSO: Konto %s angelegt", k.Email)
+		if k.Rolle == RolleAdmin {
+			if z := s.store.WaisenZuordnen(k.ID); z > 0 {
+				logf("%d Projekt(e) ohne Eigentuemer dem ersten Administrator zugeordnet", z)
+			}
+		}
+	}
+	s.setzeCookie(w, r, s.konten.SitzungAnlegen(k.ID))
+	return nil
 }

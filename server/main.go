@@ -72,6 +72,7 @@ type server struct {
 	konten        *Konten
 	apiBremse     *Bremse
 	anmeldeBremse *Bremse
+	sso           *SSO
 }
 
 func logf(format string, args ...any) { log.Printf(format, args...) }
@@ -85,13 +86,19 @@ func neuerServer(cfg config) (*server, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Konten nicht lesbar: %w", err)
 	}
-	return &server{
+	s := &server{
 		cfg:           cfg,
 		store:         store,
 		konten:        konten,
 		apiBremse:     NeueBremse(20, 120),
 		anmeldeBremse: NeueBremse(1.0/6, 10),
-	}, nil
+	}
+	// SSO richtet ein Administrator unter „Konto → Anmeldung (SSO)“ ein;
+	// PLANR_SSO_AUS=1 schaltet es im Notfall ab.
+	s.sso = NeuesSSO("Planr", filepath.Join(cfg.daten, "sso.json"), "PLANR_SSO_AUS")
+	s.sso.Sperre = false
+	s.sso.Anmelden = s.ssoAnmelden
+	return s, nil
 }
 
 func main() {
@@ -159,6 +166,7 @@ func (s *server) routen() http.Handler {
 	mux.HandleFunc("/api/admin/konten/", s.nurAdmin(s.adminKonto))
 	mux.HandleFunc("/api/admin/sicherung", s.nurAdmin(s.sicherung))
 	mux.HandleFunc("/api/rechtliches/", s.rechtliches)
+	s.sso.Wege(mux, s.nurAdmin)
 
 	mux.HandleFunc("/api/projects", s.projects)
 	mux.HandleFunc("/api/projects/", s.project)

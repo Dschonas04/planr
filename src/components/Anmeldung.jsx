@@ -109,6 +109,12 @@ export default function Anmeldung() {
           {busy ? 'Einen Moment …' : einrichtung ? 'Einrichten' : registrieren ? 'Konto anlegen' : 'Anmelden'}
         </button>
 
+        {auth?.sso && !registrieren && (
+          <a className="knopf-sso" href="/sso/anmelden">
+            Mit SSO anmelden
+          </a>
+        )}
+
         {!einrichtung && auth?.registrierung && (
           <button
             type="button"

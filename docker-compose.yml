@@ -15,9 +15,13 @@ services:
       PLANR_HINTER_PROXY: ${PLANR_HINTER_PROXY:-nein}
       PLANR_SICHERES_COOKIE: ${PLANR_SICHERES_COOKIE:-nein}
       PLANR_METRIKEN: ${PLANR_METRIKEN:-nein}
+      # SSO richtet ein Administrator unter Konto → Anmeldung (SSO) ein; 1 schaltet es im Notfall ab.
+      PLANR_SSO_AUS: ${PLANR_SSO_AUS:-}
     volumes:
       # Ohne dieses Volume waeren alle Projekte nach einem Neuaufbau weg.
       - planr-data:/data
+      # Zertifikate des Wirts, damit SSO einen Anbieter mit eigener CA erreicht.
+      - ${CA_ZERTIFIKATE:-/etc/ssl/certs/ca-certificates.crt}:/etc/ssl/certs/ca-certificates.crt:ro
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8090/healthz"]
       interval: 30s

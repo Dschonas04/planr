@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '../api.js';
 import { serverDateiSpeichern } from '../datei.js';
-import { bestaetigen, setState, toast, useStore } from '../store.js';
+import { bestaetigen, getState, setState, toast, useStore } from '../store.js';
+import SSOEinstellungen from './SSOEinstellungen.jsx';
 
 /**
  * Das eigene Konto und, für Administratoren, die Verwaltung der Instanz.
@@ -22,7 +23,7 @@ export default function KontoDialog() {
   const reiterListe = [
     ['profil', 'Profil'],
     ['daten', 'Meine Daten'],
-    ...(admin ? [['konten', 'Konten'], ['rechtliches', 'Rechtliches'], ['sicherung', 'Sicherung']] : []),
+    ...(admin ? [['konten', 'Konten'], ['sso', 'Anmeldung (SSO)'], ['rechtliches', 'Rechtliches'], ['sicherung', 'Sicherung']] : []),
   ];
 
   return (
@@ -52,6 +53,7 @@ export default function KontoDialog() {
           {reiter === 'profil' && <Profil konto={konto} />}
           {reiter === 'daten' && <MeineDaten konto={konto} />}
           {reiter === 'konten' && admin && <Konten eigeneId={konto.id} />}
+          {reiter === 'sso' && admin && <SSOEinstellungen />}
           {reiter === 'rechtliches' && admin && <RechtlicheTexte />}
           {reiter === 'sicherung' && admin && <Sicherung />}
         </div>
@@ -96,7 +98,9 @@ function Profil({ konto }) {
 
   async function abmelden() {
     await api('/api/abmeldung', { methode: 'POST' }).catch(() => {});
-    window.location.href = '/';
+    // Mit SSO auch beim Anbieter abmelden, sonst ist man beim nächsten Klick
+    // auf „Mit SSO anmelden“ ohne Rückfrage wieder drin.
+    window.location.href = getState().auth?.sso ? '/sso/abmelden' : '/';
   }
 
   return (

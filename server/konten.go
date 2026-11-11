@@ -496,3 +496,30 @@ func saubererName(roh string) string {
 	}
 	return strings.TrimSpace(string(runen))
 }
+
+// SSOKonto liefert das Konto zur E-Mail-Adresse oder legt eines an. Es bekommt
+// ein zufälliges Passwort, das niemand kennt; wer eines möchte, setzt es im
+// Profil oder lässt es von der Verwaltung setzen.
+func (k *Konten) SSOKonto(email, name string) (*Konto, bool, error) {
+	email, err := normEmail(email)
+	if err != nil {
+		return nil, false, err
+	}
+	k.mu.Lock()
+	for _, konto := range k.konten {
+		if konto.Email == email {
+			kopie := *konto
+			k.mu.Unlock()
+			if kopie.Gesperrt {
+				return nil, false, ErrKontoGesperrt
+			}
+			return &kopie, false, nil
+		}
+	}
+	k.mu.Unlock()
+	konto, err := k.Anlegen(email, name, zufall(24), RolleNutzer)
+	if err != nil {
+		return nil, false, err
+	}
+	return konto, true, nil
+}
