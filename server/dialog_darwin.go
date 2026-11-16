@@ -9,7 +9,9 @@ package main
 
 import (
 	"errors"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -35,7 +37,12 @@ func osascript(zeilen []string, args ...string) (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
+// Wie unter Linux lassen sich die Dialoge fuer Tests per Umgebung ersetzen;
+// auf einem Mac ohne Bildschirm (CI) wartete osascript sonst ewig.
 func (appleScriptDialoge) Speichern(vorschlag string) (string, error) {
+	if verz := os.Getenv("PLANR_DIALOG_VERZ"); verz != "" {
+		return filepath.Join(verz, vorschlag), nil
+	}
 	return osascript([]string{
 		"on run argv",
 		"activate",
@@ -46,6 +53,9 @@ func (appleScriptDialoge) Speichern(vorschlag string) (string, error) {
 }
 
 func (appleScriptDialoge) Oeffnen() (string, error) {
+	if pfad := os.Getenv("PLANR_DIALOG_OEFFNEN"); pfad != "" {
+		return pfad, nil
+	}
 	return osascript([]string{
 		"activate",
 		`set f to choose file with prompt "Planr-Datei öffnen (.planr oder .json)" default location (path to documents folder)`,
