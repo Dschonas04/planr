@@ -64,7 +64,7 @@ jobs:
             --user "$(id -u):$(id -g)" \
             -e HOME=/tmp -e GOCACHE=/tmp/gocache -e GOMODCACHE=/tmp/gomod \
             -v "$GITHUB_WORKSPACE":/src -w /src/server \
-            golang:1.27-alpine sh -c '
+            golang:1.27.4-alpine sh -c '
               set -e
               go vet ./...
               gofmt -l . | tee /tmp/ungeformt
