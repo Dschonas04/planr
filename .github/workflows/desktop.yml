@@ -12,6 +12,11 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      release:
+        description: 'Vorhandenes Release (z. B. v2.1.0), an das das .dmg gehängt wird; leer = nur Artefakt'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -22,7 +27,7 @@ concurrency:
 
 jobs:
   mac:
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 30
     permissions:
       contents: write
@@ -34,8 +39,12 @@ jobs:
           persist-credentials: false
 
       - name: Version bestimmen
+        env:
+          RELEASE: ${{ inputs.release }}
         run: |
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+          if [[ -n "$RELEASE" ]]; then
+            VERSION="${RELEASE#v}"
+          elif [[ "$GITHUB_REF" == refs/tags/v* ]]; then
             VERSION="${GITHUB_REF#refs/tags/v}"
           else
             VERSION="$(node -p "require('./package.json').version")-${GITHUB_SHA::7}"
@@ -136,10 +145,11 @@ jobs:
             Planr-*.dmg.sha256
 
       - name: An das Release hängen
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.release != ''
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           files: |
             Planr-*.dmg
             Planr-*.dmg.sha256
-          generate_release_notes: true
+          tag_name: ${{ inputs.release || github.ref_name }}
+          generate_release_notes: ${{ inputs.release == '' }}
