@@ -2,6 +2,21 @@
 
 ## Unveröffentlicht
 
+## 2.1.0: 2026-11-16
+
+### Neu
+- **Anmeldung per SSO** (OpenID Connect), einstellbar unter Konto → Anmeldung
+  (SSO). Konten werden an das Anbieter-Konto gebunden; neue Konten entstehen
+  nur bei offener Registrierung oder über die Freigabeliste.
+- Neues App-Logo, auch als Favicon.
+
+### Geändert
+- Anmeldeseite überarbeitet, „oder“ vor dem SSO-Knopf.
+- React 19.3, Vite 8, Node 26, Alpine 3.24.
+- Fertige Container-Images für amd64 und arm64 auf GitHub Packages
+  (`ghcr.io/dschonas04/planr`), siehe README.
+- Go 1.27.4.
+
 ## 2.0.0: 2026-10-03
 
 Planr plant jetzt ganze Einfamilienhäuser und läuft als Mac-Programm.

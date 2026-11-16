@@ -413,6 +413,14 @@ Fehlerberichte, Ideen und Pull Requests sind willkommen, siehe
 melden, siehe [SECURITY.md](SECURITY.md). Was sich in welcher Version
 geändert hat, steht in [CHANGELOG.md](CHANGELOG.md).
 
+## Fertige Images
+
+Zu jedem Release liegen Images für amd64 und arm64 auf GitHub Packages:
+
+- `ghcr.io/dschonas04/planr`
+
+Tags: `latest`, die Version (`1.2.3`) sowie `1.2` und `1`. Statt selbst zu bauen: `docker run -p 8090:8090 -v planr:/data ghcr.io/dschonas04/planr:1`.
+
 ## Lizenz
 
 Business Source License 1.1: siehe [LICENSE](LICENSE).
