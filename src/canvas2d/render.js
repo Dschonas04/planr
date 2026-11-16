@@ -275,7 +275,7 @@ function drawRoof(ctx, d, view) {
   const model = d.roof;
   if (!model) return;
   // Linien gleicher lichter Höhe: was darunter liegt, zählt nach WoFlV nur halb
-  // (1–2 m) oder gar nicht (< 1 m).
+  // (1-2 m) oder gar nicht (< 1 m).
   for (const o of d.outlines) {
     for (const [h, color, txt] of [
       [100, 'rgba(185, 28, 28, 0.08)', '1,00'],

@@ -668,7 +668,7 @@ func (s *SSO) fehlerSeite(w http.ResponseWriter, text string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusForbidden)
 	fmt.Fprintf(w, `<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>%[1]s – Anmeldung</title>
+<title>%[1]s: Anmeldung</title>
 <style>body{font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:#f7f7f6;color:#37352f;display:grid;place-items:center;min-height:100vh;margin:0}
 main{background:#fff;border:1px solid #e2e2df;border-radius:10px;padding:28px 32px;max-width:440px}
 h1{font-size:20px;margin:0 0 8px}a{color:#1b6ec2}

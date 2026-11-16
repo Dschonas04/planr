@@ -63,7 +63,7 @@ func Unwrap(raw []byte) (json.RawMessage, error) {
 	if err := json.Unmarshal(raw, &f); err == nil && f.Format == FormatName {
 		if f.FormatVersion > FormatVersion {
 			return nil, fmt.Errorf(
-				"Datei ist in Formatversion %d gespeichert, dieser Stand kennt nur %d — bitte Planr aktualisieren",
+				"Datei ist in Formatversion %d gespeichert, dieser Stand kennt nur %d, bitte Planr aktualisieren",
 				f.FormatVersion, FormatVersion)
 		}
 		if len(f.Project) == 0 {

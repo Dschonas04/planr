@@ -3,7 +3,7 @@
  *
  * Der Grund für den Wechsel auf TypeScript ist genau hier zu sehen: Planr
  * rechnet mit Zentimetern, Pixeln, Grad und Bogenmaß gleichzeitig. In
- * JavaScript sind das alles `number` und damit verwechselbar — ein Winkel in
+ * JavaScript sind das alles `number` und damit verwechselbar: ein Winkel in
  * Grad, wo Bogenmaß erwartet wird, fällt erst im schiefen Bild auf.
  *
  * Die Einheitentypen unten sind sogenannte Branded Types: zur Laufzeit bleiben
@@ -13,13 +13,13 @@
 
 declare const einheit: unique symbol;
 
-/** Zentimeter — die Einheit des gesamten Modells. */
+/** Zentimeter: die Einheit des gesamten Modells. */
 export type Cm = number & { readonly [einheit]?: 'cm' };
 /** Bildschirmpixel. */
 export type Px = number & { readonly [einheit]?: 'px' };
 /** Winkel im Bogenmaß. */
 export type Rad = number & { readonly [einheit]?: 'rad' };
-/** Winkel in Grad — so werden Möbeldrehungen gespeichert. */
+/** Winkel in Grad: so werden Möbeldrehungen gespeichert. */
 export type Deg = number & { readonly [einheit]?: 'deg' };
 
 export interface Point {
@@ -109,7 +109,7 @@ export interface Dimension {
   id: string;
   a: Point;
   b: Point;
-  /** Abstand der Maßlinie von der Strecke a–b, senkrecht, vorzeichenbehaftet. */
+  /** Abstand der Maßlinie von der Strecke a-b, senkrecht, vorzeichenbehaftet. */
   offsetCm: Cm;
 }
 

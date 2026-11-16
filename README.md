@@ -1,4 +1,4 @@
-# Planr — Grundrisse und Häuser maßstabsgetreu planen
+# Planr: Grundrisse und Häuser maßstabsgetreu planen
 
 <img src="docs/logo.svg" alt="" width="96" align="right">
 
@@ -14,7 +14,7 @@ Zentimetern; die 3D-Vorschau baut denselben Plan als begehbares Modell auf.
 
 Der Editor läuft vollständig im Browser. Dazu kommt ein schlanker Go-Server
 mit Konten, der Projekte speichert, sie über Links teilbar macht und
-Grundrisse als SVG, PNG und DXF ausliefert — ohne Datenbank.
+Grundrisse als SVG, PNG und DXF ausliefert, ohne Datenbank.
 
 ## Inhalt
 
@@ -34,40 +34,40 @@ Grundrisse als SVG, PNG und DXF ausliefert — ohne Datenbank.
 
 Seit Version 2 plant Planr ganze Einfamilienhäuser, nicht mehr nur Wohnungen:
 
-- **Geschosse** – Keller, Erdgeschoss, Obergeschoss, Dachgeschoss mit Höhenlage
+- **Geschosse**: Keller, Erdgeschoss, Obergeschoss, Dachgeschoss mit Höhenlage
   (OKFF), lichter Raumhöhe und Deckenstärke. Das Geschoss darunter liegt grau
   als Unterlage hinter dem aktiven; ein neues Geschoss übernimmt auf Wunsch die
   Außenwände.
-- **Wandaufbauten** – Ziegel 36,5/42,5 monolithisch, Kalksandstein mit WDVS,
+- **Wandaufbauten**: Ziegel 36,5/42,5 monolithisch, Kalksandstein mit WDVS,
   Holzrahmenbau, WU-Beton mit Perimeterdämmung, tragende und nichttragende
   Innenwände, Trockenbau. Jede Schicht mit Dicke und λ; Planr rechnet den
   U-Wert nach DIN EN ISO 6946 und vergleicht ihn mit der GEG-Referenz.
-- **Technische Darstellung** – Schichten mit Schraffur nach Baustoff,
+- **Technische Darstellung**: Schichten mit Schraffur nach Baustoff,
   Gehrungen an Ecken, saubere T-Stöße, Leibungen, Fenster mit Rahmen und
   Fensterbank, Rohbaumaße und Brüstungshöhe an jeder Öffnung („1,51/1,38⁵
   BRH 75“), Maße in Architektenschreibweise mit hochgestelltem halben
   Zentimeter.
-- **Bemaßung** – Außenmaßketten an allen vier Seiten automatisch (Öffnungen
+- **Bemaßung**: Außenmaßketten an allen vier Seiten automatisch (Öffnungen
   und Gesamtmaß), dazu frei gesetzte Maßlinien mit Fang an Wandecken und
   Leibungen.
-- **Präzise zeichnen** – Länge eintippen und Enter (`450`), mit Winkel
+- **Präzise zeichnen**: Länge eintippen und Enter (`450`), mit Winkel
   (`450;90`); Umschalt zeichnet rechtwinklig; Fang an Endpunkten,
   Wandmitten, auf Wandachsen und Spurlinien zu vorhandenen Punkten.
-- **Treppen nach DIN 18065** – gerade, L mit Viertelpodest, U mit Halbpodest.
+- **Treppen nach DIN 18065**: gerade, L mit Viertelpodest, U mit Halbpodest.
   Steigungszahl aus der Geschosshöhe, Auftritt nach der Schrittmaßregel,
   Prüfung von Steigung, Auftritt, Laufbreite und Schrittmaß. Die Deckenöffnung
   im Geschoss darüber entsteht von selbst.
-- **Dach** – Sattel-, Walm-, Pult- und Flachdach mit Neigung, Kniestock,
+- **Dach**: Sattel-, Walm-, Pult- und Flachdach mit Neigung, Kniestock,
   Überstand und Aufbau. Im Dachgeschoss zeigt der Plan die Linien 1,00 m und
   2,00 m lichte Höhe.
-- **Wohnfläche nach WoFlV** – Raumstempel mit Name, Nutzung und Bodenbelag;
+- **Wohnfläche nach WoFlV**: Raumstempel mit Name, Nutzung und Bodenbelag;
   lichte Flächen aus den Wandoberflächen, unter Dachschrägen voll/halb/gar
   nicht nach lichter Höhe, Balkone und Terrassen zu einem Viertel. Aufstellung
   als Tabelle, CSV für Excel und im PDF.
-- **Pläne als PDF** – maßstäblich 1:50, 1:100 oder 1:200 auf A4 bis A1 mit
+- **Pläne als PDF**: maßstäblich 1:50, 1:100 oder 1:200 auf A4 bis A1 mit
   Plankopf, Nordpfeil, Maßstabsleiste und Flächenberechnung. Vektor-PDF ohne
   fremde Bibliothek, gezeichnet vom selben Code wie der Bildschirm.
-- **3D** – das ganze Haus mit Decken, Treppen, Dach und Giebelwänden, die der
+- **3D**: das ganze Haus mit Decken, Treppen, Dach und Giebelwänden, die der
   Dachschräge folgen; oder nur das aktive Geschoss.
 
 Das Beispielhaus (*Projekte → Beispielhaus*) zeigt alles zusammen: Erdgeschoss
@@ -93,26 +93,26 @@ Technisch ist es derselbe Go-Server wie im Container, gebunden an
 ## Funktionen
 
 ### Zeichnen
-- **Wandzüge** — Klick für Klick, mit laufender Längenanzeige in cm bzw. m
-- **Winkelraster** — Wände rasten auf 15° ein, `Alt` hebt das auf
-- **Fangpunkte** — Wandenden ziehen sich gegenseitig an, sonst greift das Raster
-- **Wanddicken** — 11,5 / 17,5 / 24 / 30 / 36,5 cm, frei pro Wand änderbar
-- **Türen und Fenster** — auf eine Wand klicken; Breite, Höhe, Brüstung und
+- **Wandzüge**: Klick für Klick, mit laufender Längenanzeige in cm bzw. m
+- **Winkelraster**: Wände rasten auf 15° ein, `Alt` hebt das auf
+- **Fangpunkte**: Wandenden ziehen sich gegenseitig an, sonst greift das Raster
+- **Wanddicken**: 11,5 / 17,5 / 24 / 30 / 36,5 cm, frei pro Wand änderbar
+- **Türen und Fenster**: auf eine Wand klicken; Breite, Höhe, Brüstung und
   Anschlagsrichtung sind einstellbar
-- **Maßketten** — jede Wand zeigt ihre Länge, abschaltbar
+- **Maßketten**: jede Wand zeigt ihre Länge, abschaltbar
 
 ### Räume
-- **Automatische Raumerkennung** — geschlossene Wandzüge werden als Flächen
+- **Automatische Raumerkennung**: geschlossene Wandzüge werden als Flächen
   erkannt und mit ihrer Größe in m² beschriftet
-- **T-Stöße** — Innenwände, die mitten auf einer Außenwand enden, teilen die
+- **T-Stöße**: Innenwände, die mitten auf einer Außenwand enden, teilen die
   Fläche korrekt
-- **Gesamtfläche** — Anzahl Räume, Fläche, Wände und Möbel auf einen Blick
+- **Gesamtfläche**: Anzahl Räume, Fläche, Wände und Möbel auf einen Blick
 
 ### Möblieren
-- **Katalog mit realen Maßen** — rund 40 Objekte in acht Kategorien, von
+- **Katalog mit realen Maßen**: rund 40 Objekte in acht Kategorien, von
   Einzelbett 90×200 bis Badewanne 170×75
-- **Frei anpassbar** — Breite, Tiefe, Höhe, Drehung, Farbe und Name pro Objekt
-- **Bedienung** — ziehen zum Verschieben, Eckgriffe zum Skalieren, Drehgriff
+- **Frei anpassbar**: Breite, Tiefe, Höhe, Drehung, Farbe und Name pro Objekt
+- **Bedienung**: ziehen zum Verschieben, Eckgriffe zum Skalieren, Drehgriff
   oder `R` für 15°-Schritte
 
 ### 3D-Vorschau
@@ -124,29 +124,29 @@ Technisch ist es derselbe Go-Server wie im Container, gebunden an
 
 ### Speichern und Export
 - **Autosave** im `localStorage`
-- **JSON** — Projekt speichern und wieder öffnen
-- **PNG** — Pixelplan in hoher Auflösung
-- **SVG** — Vektorplan, in Millimetern bemaßt und damit direkt druck- und
+- **JSON**: Projekt speichern und wieder öffnen
+- **PNG**: Pixelplan in hoher Auflösung
+- **SVG**: Vektorplan, in Millimetern bemaßt und damit direkt druck- und
   CAD-tauglich
 
 ### Server (Go)
-- **Benannte Projekte** — anlegen, laden, speichern, löschen über eine REST-API
-- **Kennzahlen serverseitig** — Raumzahl und Fläche werden aus dem Grundriss
+- **Benannte Projekte**: anlegen, laden, speichern, löschen über eine REST-API
+- **Kennzahlen serverseitig**: Raumzahl und Fläche werden aus dem Grundriss
   gerechnet, nicht vom Client geglaubt
-- **Freigabe-Links** — ein 32-stelliger Token gibt einen Grundriss nur lesend
+- **Freigabe-Links**: ein 32-stelliger Token gibt einen Grundriss nur lesend
   frei und lässt sich jederzeit zurückziehen
-- **SVG ohne Browser** — `/api/projects/<id>/svg` liefert den bemaßten Plan
+- **SVG ohne Browser**: `/api/projects/<id>/svg` liefert den bemaßten Plan
   direkt aus, verlinkbar und aus Skripten abrufbar
-- **Ablage** — eine JSON-Datei je Projekt, atomar geschrieben, keine Datenbank
+- **Ablage**: eine JSON-Datei je Projekt, atomar geschrieben, keine Datenbank
 
 ### Import und Export
-- **`.planr`** — das eigene Format: JSON mit Kennung, Versionsnummer und
+- **`.planr`**: das eigene Format: JSON mit Kennung, Versionsnummer und
   Zeitstempel. Ältere Dateien ohne Hülle werden weiterhin gelesen
-- **PNG** — serverseitig gerastert, ohne Browser, Größe über `?size=` steuerbar
-- **SVG** — Vektorplan in Millimetern bemaßt
-- **DXF** — AutoCAD R12, damit der Grundriss in jedes CAD-Programm kommt;
+- **PNG**: serverseitig gerastert, ohne Browser, Größe über `?size=` steuerbar
+- **SVG**: Vektorplan in Millimetern bemaßt
+- **DXF**: AutoCAD R12, damit der Grundriss in jedes CAD-Programm kommt;
   getrennte Ebenen für Wände, Öffnungen, Möbel, Räume und Beschriftung
-- **Prüfung vor dem Import** — `/api/validate` meldet alle Mängel auf einmal,
+- **Prüfung vor dem Import**: `/api/validate` meldet alle Mängel auf einmal,
   statt nach jedem Versuch den nächsten Einzelfehler
 
 ## Konten, Rechte und Freigaben
@@ -159,14 +159,14 @@ einzelnen Browser.
 |---|---|
 | **Administrator** | alles, was Nutzer dürfen; dazu alle Projekte sehen, Konten anlegen, sperren, Passwörter setzen und löschen, Impressum und Datenschutzerklärung pflegen, Datensicherung herunterladen |
 | **Nutzer** | eigene Projekte anlegen, speichern, importieren, exportieren, teilen und löschen; eigenes Konto verwalten, Daten exportieren, Konto löschen |
-| **Empfänger eines Links** | den geteilten Grundriss samt 3D-Ansicht ansehen und als PNG/SVG exportieren – ohne Konto, ohne Änderungsmöglichkeit |
+| **Empfänger eines Links** | den geteilten Grundriss samt 3D-Ansicht ansehen und als PNG/SVG exportieren, ohne Konto, ohne Änderungsmöglichkeit |
 
-- **Einrichtung** – Beim ersten Aufruf fragt Planr nach dem ersten Konto; es
+- **Einrichtung**: Beim ersten Aufruf fragt Planr nach dem ersten Konto; es
   wird Administrator. Projekte aus der Zeit vor den Konten gehen an dieses Konto.
-- **Registrierung** – standardmäßig geschlossen. Konten legt ein Administrator
+- **Registrierung**: standardmäßig geschlossen. Konten legt ein Administrator
   unter *Konto → Konten* an; mit `PLANR_REGISTRIERUNG=offen` darf sich jeder
   selbst registrieren.
-- **SSO** – Unter *Konto → Anmeldung (SSO)* trägt ein Administrator einen
+- **SSO**: Unter *Konto → Anmeldung (SSO)* trägt ein Administrator einen
   OpenID-Connect-Anbieter wie Keycloak ein (Aussteller, Client-ID,
   Client-Geheimnis, auf Wunsch erlaubte Konten). Die Anmeldeseite bietet dann
   *Mit SSO anmelden* an; das Konto wird über die vom Anbieter bestätigte
@@ -174,12 +174,12 @@ einzelnen Browser.
   Neue Konten legt SSO nur an, wenn die Registrierung offen ist oder eine
   Freigabeliste gesetzt ist. Weiterleitung beim Anbieter:
   `https://<planr>/sso/zurueck`. `PLANR_SSO_AUS=1` schaltet SSO im Notfall ab.
-- **Speichern** – Ein Projekt auf dem Server wird kurz nach jeder Änderung
+- **Speichern**: Ein Projekt auf dem Server wird kurz nach jeder Änderung
   automatisch gespeichert; die Kopfzeile zeigt den Stand.
-- **Teilen** – *Teilen* stellt einen Link zum Ansehen aus und bietet die
+- **Teilen**: *Teilen* stellt einen Link zum Ansehen aus und bietet die
   Exporte des Servers (DXF, PNG, SVG, `.planr`). Der Link lässt sich jederzeit
   zurückziehen.
-- **Ausscheidende Mitarbeiter** – Beim Löschen eines Kontos durch einen
+- **Ausscheidende Mitarbeiter**: Beim Löschen eines Kontos durch einen
   Administrator gehen dessen Projekte an den Administrator über.
 
 ## Betrieb
@@ -215,11 +215,11 @@ location / {
 
 ### Datensicherung
 
-- **Über die Oberfläche** – *Konto → Sicherung* lädt das Datenverzeichnis als
+- **Über die Oberfläche**: *Konto → Sicherung* lädt das Datenverzeichnis als
   `tar.gz` (ohne Sitzungen).
-- **Auf dem Host** – das Volume `planr-data` sichern, z. B.
+- **Auf dem Host**: das Volume `planr-data` sichern, z. B.
   `docker run --rm -v planr_planr-data:/d -v "$PWD":/b alpine tar czf /b/planr.tar.gz -C /d .`
-- **Wiederherstellen** – Dienst stoppen, Archiv in das Datenverzeichnis
+- **Wiederherstellen**: Dienst stoppen, Archiv in das Datenverzeichnis
   entpacken, Dienst starten. Alle melden sich neu an.
 
 ### Datenschutz und Rechtliches
@@ -258,7 +258,7 @@ cd server && go run .    # Server auf http://localhost:8090
 cd server && go test ./... && go vet ./...
 ```
 
-Die Raumerkennung existiert zweimal — in JavaScript für den Editor und in Go
+Die Raumerkennung existiert zweimal: in JavaScript für den Editor und in Go
 für Kennzahlen und SVG-Export. Beide Testläufe prüfen dieselben Fälle,
 darunter die Beispielwohnung mit ihren drei Räumen und exakt 54 m². Weicht eine
 Seite ab, fällt ein Test um.
@@ -275,7 +275,7 @@ liegen im Volume `planr-data`.
 ### API
 
 Alle Pfade unter `/api/projects`, `/api/import` und `/api/validate` verlangen
-eine Anmeldung (Cookie `planr_sitzung`) und liefern nur eigene Projekte –
+eine Anmeldung (Cookie `planr_sitzung`) und liefern nur eigene Projekte:
 Administratoren sehen alle. Ändernde Anfragen brauchen den Kopf
 `X-Requested-With: planr`.
 
@@ -297,7 +297,7 @@ Administratoren sehen alle. Ändernde Anfragen brauchen den Kopf
 | `POST` | `/api/projects/<id>/share` | Freigabe-Link erzeugen |
 | `DELETE` | `/api/projects/<id>/share` | Freigabe zurückziehen |
 | `GET` | `/api/projects/<id>/svg` | bemaßtes SVG |
-| `GET` | `/api/projects/<id>/png` | PNG, `?size=` 200–6000 px |
+| `GET` | `/api/projects/<id>/png` | PNG, `?size=` 200-6000 px |
 | `GET` | `/api/projects/<id>/dxf` | DXF für CAD |
 | `GET` | `/api/projects/<id>/planr` | `.planr`-Datei |
 | `POST` | `/api/import` | `.planr` oder JSON hochladen, `?name=` |
@@ -325,15 +325,15 @@ Administratoren sehen alle. Ändernde Anfragen brauchen den Kopf
 ## Architektur
 
 ### Tech-Stack
-- **Frontend** — React 19, Vite 8, HTML5 Canvas 2D
-- **Modellschicht** — TypeScript mit eigenen Einheitentypen für cm, px, Grad
+- **Frontend**: React 19, Vite 8, HTML5 Canvas 2D
+- **Modellschicht**: TypeScript mit eigenen Einheitentypen für cm, px, Grad
   und Bogenmaß
-- **3D** — three.js mit OrbitControls, per Code-Splitting nachgeladen
-- **State** — eigener Store über `useSyncExternalStore`
-- **Server** — Go 1.26, Standardbibliothek plus `golang.org/x/image` und
+- **3D**: three.js mit OrbitControls, per Code-Splitting nachgeladen
+- **State**: eigener Store über `useSyncExternalStore`
+- **Server**: Go 1.26, Standardbibliothek plus `golang.org/x/image` und
   `golang.org/x/crypto/bcrypt`
   (Rasterung und Bitmap-Schrift für den PNG-Export)
-- **Auslieferung** — eine statisch gelinkte Binärdatei, die auch das Frontend
+- **Auslieferung**: eine statisch gelinkte Binärdatei, die auch das Frontend
   ausliefert
 
 ### Aufbau
@@ -382,12 +382,12 @@ in Pixel passiert an einer einzigen Stelle, nämlich im `setTransform()` des
 Renderers. Dadurch kann kein Maßstabsfehler in die Fachlogik einsickern.
 
 **Einheiten im Typsystem.** Planr rechnet gleichzeitig mit Zentimetern,
-Pixeln, Grad und Bogenmaß — in JavaScript sind das alles `number` und damit
+Pixeln, Grad und Bogenmaß: in JavaScript sind das alles `number` und damit
 verwechselbar. Die Modellschicht ist deshalb TypeScript, mit unterscheidbaren
 Typen `Cm`, `Px`, `Rad` und `Deg`. Zur Laufzeit bleiben es gewöhnliche Zahlen
 ohne jeden Aufwand.
 
-**Kein eigenes Dateiformat.** `.planr` ist JSON — eine eigene Syntax hätte
+**Kein eigenes Dateiformat.** `.planr` ist JSON: eine eigene Syntax hätte
 nichts gebracht, was JSON nicht kann, aber jedes vorhandene Werkzeug
 ausgesperrt. Was gefehlt hat, war Verbindlichkeit: eine Kennung, damit eine
 fremde JSON-Datei nicht versehentlich als Grundriss gilt, eine Versionsnummer
@@ -395,7 +395,7 @@ für spätere Änderungen und eine Prüfung, die alle Mängel auf einmal meldet.
 
 **Öffnungen ohne CSG.** Türen und Fenster werden nicht aus der Wand
 herausgeschnitten. Stattdessen zerlegt `wallSolids()` jede Wand in die massiven
-Stücke dazwischen — Brüstung unter dem Fenster, Sturz darüber. Das ist robust,
+Stücke dazwischen: Brüstung unter dem Fenster, Sturz darüber. Das ist robust,
 schnell und kommt ohne Boolesche Operationen auf Geometrie aus.
 
 ## Grenzen
@@ -415,7 +415,7 @@ geändert hat, steht in [CHANGELOG.md](CHANGELOG.md).
 
 ## Lizenz
 
-Business Source License 1.1 — siehe [LICENSE](LICENSE).
+Business Source License 1.1: siehe [LICENSE](LICENSE).
 
 Kurz gefasst: lesen, ändern, selbst betreiben und beitragen ist erlaubt,
 einschließlich Nutzung in der eigenen Organisation. Nicht erlaubt ist es, Planr
@@ -423,5 +423,5 @@ als kommerzielles Angebot für Dritte zu betreiben oder zu verkaufen. Am
 **10. August 2030** geht diese Version automatisch in die **Apache-2.0**-Lizenz
 über.
 
-BSL ist quelloffen, aber keine von der OSI anerkannte Open-Source-Lizenz —
+BSL ist quelloffen, aber keine von der OSI anerkannte Open-Source-Lizenz:
 GitHub weist sie deshalb als „Other" aus.

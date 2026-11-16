@@ -57,16 +57,16 @@ export function stairCalc(stair: Stair, riseCm: Cm): StairCalc {
   const warnings: string[] = [];
   const f = (v: number) => v.toFixed(1).replace('.', ',');
   if (riserCm < STAIR_LIMITS.riserMin || riserCm > STAIR_LIMITS.riserMax) {
-    warnings.push(`Steigung ${f(riserCm)} cm liegt außerhalb 14–20 cm (DIN 18065).`);
+    warnings.push(`Steigung ${f(riserCm)} cm liegt außerhalb 14-20 cm (DIN 18065).`);
   }
   if (treadCm < STAIR_LIMITS.treadMin || treadCm > STAIR_LIMITS.treadMax) {
-    warnings.push(`Auftritt ${f(treadCm)} cm liegt außerhalb 23–37 cm (DIN 18065).`);
+    warnings.push(`Auftritt ${f(treadCm)} cm liegt außerhalb 23-37 cm (DIN 18065).`);
   }
   if (stair.widthCm < STAIR_LIMITS.widthMin) {
     warnings.push(`Laufbreite ${f(stair.widthCm)} cm ist schmaler als 80 cm.`);
   }
   if (stepRuleCm < STAIR_LIMITS.stepRuleMin || stepRuleCm > STAIR_LIMITS.stepRuleMax) {
-    warnings.push(`Schrittmaß 2s+a = ${f(stepRuleCm)} cm, bequem sind 59–65 cm.`);
+    warnings.push(`Schrittmaß 2s+a = ${f(stepRuleCm)} cm, bequem sind 59-65 cm.`);
   }
   return { risers, riserCm, treads, treadCm, stepRuleCm, firstRun, warnings };
 }

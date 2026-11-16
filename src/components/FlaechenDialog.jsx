@@ -15,11 +15,11 @@ export default function FlaechenDialog() {
   const sum = (f) => rows.reduce((s, r) => s + f(r), 0);
 
   const csv = () => {
-    const kopf = ['Geschoss', 'Raum', 'Nutzung', 'Bodenbelag', 'Grundfläche m²', 'ab 2 m', '1–2 m', 'WoFlV m²', 'Umfang m'];
+    const kopf = ['Geschoss', 'Raum', 'Nutzung', 'Bodenbelag', 'Grundfläche m²', 'ab 2 m', '1-2 m', 'WoFlV m²', 'Umfang m'];
     const zeilen = rows.map((r) => [r.level, r.name, USAGE_LABEL[r.usage], r.floor, de(r.netM2), de(r.fullM2), de(r.halfM2), de(r.woflvM2), de(r.perimeterM)]);
     const text = [kopf, ...zeilen].map((z) => z.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
     // BOM, damit Excel die Umlaute erkennt.
-    dateiSpeichern(`${project.name || 'flaechen'} – Flächen.csv`, new Blob(['﻿' + text], { type: 'text/csv' }));
+    dateiSpeichern(`${project.name || 'flaechen'}: Flächen.csv`, new Blob(['﻿' + text], { type: 'text/csv' }));
   };
 
   return (
@@ -41,7 +41,7 @@ export default function FlaechenDialog() {
                 <th>Boden</th>
                 <th className="zahl">Grundfläche</th>
                 <th className="zahl">ab 2 m</th>
-                <th className="zahl">1–2 m</th>
+                <th className="zahl">1-2 m</th>
                 <th className="zahl">WoFlV</th>
                 <th className="zahl">Umfang</th>
               </tr>

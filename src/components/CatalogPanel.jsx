@@ -25,7 +25,7 @@ export default function CatalogPanel() {
       type="button"
       className={`catalog-item ${state.pendingCatalogId === item.id ? 'active' : ''}`}
       onClick={() => pick(item)}
-      title={`${item.label} — ${item.w}×${item.d}×${item.h} cm`}
+      title={`${item.label}: ${item.w}×${item.d}×${item.h} cm`}
     >
       <span className="swatch" style={{ background: item.color }} />
       <span className="catalog-label">{item.label}</span>

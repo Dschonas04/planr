@@ -420,7 +420,7 @@ export interface AreaRow {
   floor: string;
   /** Lichte Grundfläche in m². */
   netM2: number;
-  /** Davon mit lichter Höhe ≥ 2 m bzw. 1–2 m (nur unter Dachschrägen verschieden). */
+  /** Davon mit lichter Höhe ≥ 2 m bzw. 1-2 m (nur unter Dachschrägen verschieden). */
   fullM2: number;
   halfM2: number;
   /** Nach WoFlV anrechenbar. */
@@ -431,7 +431,7 @@ export interface AreaRow {
 /**
  * Flächenaufstellung über alle Geschosse.
  *
- * WoFlV § 4: Flächen mit lichter Höhe ≥ 2 m voll, 1–2 m zur Hälfte, unter 1 m
+ * WoFlV § 4: Flächen mit lichter Höhe ≥ 2 m voll, 1-2 m zur Hälfte, unter 1 m
  * gar nicht. Balkone, Loggien, Dachgärten und Terrassen in der Regel zu einem
  * Viertel. Nutzflächen (Keller, Technik, Garage) zählen nicht zur Wohnfläche.
  */

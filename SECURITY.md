@@ -7,7 +7,7 @@ Sicherheitskorrekturen gibt es für die jeweils neueste Version 1.x.
 ## Lücke melden
 
 Bitte **kein öffentliches Issue**. Meldungen per E-Mail an
-200050623+Dschonas04@users.noreply.github.com mit Beschreibung, betroffener Version und – wenn möglich –
+200050623+Dschonas04@users.noreply.github.com mit Beschreibung, betroffener Version und, wenn möglich:
 einem Weg, die Lücke nachzuvollziehen. Eine Eingangsbestätigung kommt innerhalb
 von 72 Stunden, eine Einschätzung innerhalb von sieben Tagen.
 

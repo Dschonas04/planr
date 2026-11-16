@@ -112,7 +112,7 @@ test('Satteldach: Traufe auf Kniestockhöhe, First über der Mitte', () => {
   assert.ok(Math.abs(roofTopAt(m, { x: 500, y: 400 }) - 520) < 1e-6);
 });
 
-test('WoFlV: unter 1 m nichts, 1–2 m halb', () => {
+test('WoFlV: unter 1 m nichts, 1-2 m halb', () => {
   const p = createProject();
   const dg = box(p.levels[0], 1000, 800, 40);
   p.roof = { ...defaultRoof(dg.id), kind: 'pult', pitchDeg: 45, kneeWallCm: 50, overhangCm: 0, thicknessCm: 0.0001, ridgeAlongX: true, highSidePositive: true };

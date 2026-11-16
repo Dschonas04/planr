@@ -334,7 +334,7 @@ function RechtlicheTexte() {
           ? 'Pflichtangaben nach § 5 DDG: Name und Anschrift, Kontakt, ggf. Registergericht und USt-IdNr.'
           : eigen
             ? 'Eigener Text ist hinterlegt. Leeren und speichern stellt die Vorlage wieder her.'
-            : 'Das ist die mitgelieferte Vorlage. Sie beschreibt, was Planr verarbeitet – prüfe und ergänze sie.'}
+            : 'Das ist die mitgelieferte Vorlage. Sie beschreibt, was Planr verarbeitet, prüfe und ergänze sie.'}
       </p>
       <textarea className="rechts-editor" value={text} onChange={(e) => setText(e.target.value)} rows={14} />
       {fehler && <p className="board-error">{fehler}</p>}
@@ -351,7 +351,7 @@ function Sicherung() {
       <h3>Datensicherung</h3>
       <p>
         Lädt das gesamte Datenverzeichnis als tar.gz herunter: Projekte, Konten, rechtliche Texte. Sitzungen sind nicht
-        enthalten – nach dem Einspielen meldet sich jeder neu an.
+        enthalten: nach dem Einspielen meldet sich jeder neu an.
       </p>
       <p>
         Zum Wiederherstellen den Dienst stoppen, das Archiv in das Datenverzeichnis entpacken (Volume <code>/data</code>)

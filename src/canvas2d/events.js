@@ -134,7 +134,7 @@ export function createInteraction(canvas) {
     const level = activeLevel(s);
     const hit = nearestWall(level, p, 60);
     if (!hit) {
-      toast('Tür und Fenster brauchen eine Wand — bitte näher an eine Wand klicken.', 'warn');
+      toast('Tür und Fenster brauchen eine Wand, bitte näher an eine Wand klicken.', 'warn');
       return;
     }
     const isWindow = type === 'window';
@@ -191,7 +191,7 @@ export function createInteraction(canvas) {
     const s = getState();
     const idx = levelIndex();
     if (idx >= s.project.levels.length - 1) {
-      toast('Über diesem Geschoss gibt es keins — die Treppe rechnet mit der Geschosshöhe. Lege oben ein Geschoss an, damit die Deckenöffnung entsteht.', 'warn');
+      toast('Über diesem Geschoss gibt es keins, die Treppe rechnet mit der Geschosshöhe. Lege oben ein Geschoss an, damit die Deckenöffnung entsteht.', 'warn');
     }
     const step = s.settings.snapEnabled ? s.settings.gridCm : 0;
     const id = newId('st');

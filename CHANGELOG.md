@@ -2,7 +2,7 @@
 
 ## Unveröffentlicht
 
-## 2.0.0 – 2026-10-03
+## 2.0.0: 2026-10-03
 
 Planr plant jetzt ganze Einfamilienhäuser und läuft als Mac-Programm.
 
@@ -31,7 +31,7 @@ Planr plant jetzt ganze Einfamilienhäuser und läuft als Mac-Programm.
 - Projektdateien tragen `version: 2`. Dateien der Version 1 werden beim Öffnen
   ergänzt (Höhenlagen übereinander, kein Dach, leere Treppen/Maße/Stempel).
 
-## 1.0.0 – 2026-09-17
+## 1.0.0: 2026-09-17
 
 Erste Version für den geschäftlichen Einsatz.
 

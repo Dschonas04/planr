@@ -270,7 +270,7 @@ func (s *server) sicht(p ProjectMeta, k *Konto) projektSicht {
 		if besitzer, ok := s.konten.Konto(p.Owner); ok {
 			v.Besitzer = besitzer.Name
 		} else {
-			v.Besitzer = "–"
+			v.Besitzer = "-"
 		}
 	}
 	return v

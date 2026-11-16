@@ -37,7 +37,7 @@ export default function PdfDialog() {
         flaechen,
         settings: { ...s.settings, showFurniture: moebel, showDimensions: false },
       });
-      await dateiSpeichern(`${project.name || 'Plan'} – Grundrisse 1-${scale}.pdf`, blob);
+      await dateiSpeichern(`${project.name || 'Plan'}: Grundrisse 1-${scale}.pdf`, blob);
       schliessen();
     } catch (e) {
       toast(`PDF konnte nicht erstellt werden: ${e.message}`, 'error');
@@ -107,7 +107,7 @@ export default function PdfDialog() {
         {passt.some((p) => !p) && (
           <p className="board-error">
             Nicht jedes Geschoss passt im Maßstab 1:{scale} auf {paper}
-            {landscape ? ' quer' : ' hoch'}. Größeres Papier oder kleineren Maßstab wählen — sonst wird der Plan am Rand abgeschnitten.
+            {landscape ? ' quer' : ' hoch'}. Größeres Papier oder kleineren Maßstab wählen, sonst wird der Plan am Rand abgeschnitten.
           </p>
         )}
         <div className="knopfreihe">

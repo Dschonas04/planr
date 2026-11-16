@@ -84,7 +84,7 @@ function plankopf(ctx, project, level, scale, pageW, pageH, blatt) {
   lab('Bauvorhaben', x, row(0));
   val(project.name || 'Ohne Namen', x, row(0), 11, true);
   lab('Bauherr · Grundstück', x, row(1));
-  val([project.meta.bauherr, project.meta.adresse].filter(Boolean).join(' · ') || '—', x, row(1));
+  val([project.meta.bauherr, project.meta.adresse].filter(Boolean).join(' · ') || '-', x, row(1));
   lab('Planinhalt', x, row(2));
   val(`Grundriss ${level.name}`, x, row(2), 10, true);
   lab('Maßstab', x + w * 0.55, row(2));
@@ -94,9 +94,9 @@ function plankopf(ctx, project, level, scale, pageW, pageH, blatt) {
   lab('Datum', x + w * 0.55, row(3));
   val(datum(), x + w * 0.55, row(3));
   lab('Planverfasser', x, row(4));
-  val(project.meta.planverfasser || '—', x, row(4));
+  val(project.meta.planverfasser || '-', x, row(4));
   lab('Plan-Nr. · Blatt', x + w * 0.55, row(4));
-  val(`${project.meta.planNummer || '—'} · ${blatt}`, x + w * 0.55, row(4));
+  val(`${project.meta.planNummer || '-'} · ${blatt}`, x + w * 0.55, row(4));
   lab('Stand', x, row(5));
   val('Entwurfsplanung · Maße in m bzw. cm, Rohbaumaße', x, row(5), 8);
   lab('erstellt mit', x + w * 0.55, row(5));
@@ -130,7 +130,7 @@ function nordpfeil(ctx, cx, cy, deg) {
   ctx.restore();
 }
 
-/** Maßstabsleiste 0–5 m in Meterfeldern. */
+/** Maßstabsleiste 0-5 m in Meterfeldern. */
 function massstabsleiste(ctx, x, y, scale) {
   const mPt = (1000 / scale) * MM; // 1 m auf dem Papier
   const meters = scale <= 50 ? 5 : 10;
@@ -206,7 +206,7 @@ function flaechenSeite(project, paper, landscape, blatt) {
   const rows = areaSchedule(project);
   const x0 = 20 * MM;
   let y = 25 * MM;
-  text(ctx, `Wohnflächenberechnung nach WoFlV — ${project.name}`, x0, y, 14, { bold: true });
+  text(ctx, `Wohnflächenberechnung nach WoFlV: ${project.name}`, x0, y, 14, { bold: true });
   y += 7 * MM;
   text(ctx, `${project.meta.bauherr || ''} ${project.meta.adresse ? '· ' + project.meta.adresse : ''} · Stand ${datum()} · Blatt ${blatt}`, x0, y, 8, { color: '#444' });
   y += 10 * MM;
@@ -217,7 +217,7 @@ function flaechenSeite(project, paper, landscape, blatt) {
     ['Boden', 112, 'left'],
     ['Grundfläche', 160, 'right'],
     ['ab 2 m', 182, 'right'],
-    ['1–2 m', 202, 'right'],
+    ['1-2 m', 202, 'right'],
     ['anrechenbar', 232, 'right'],
     ['Umfang', 254, 'right'],
   ];
@@ -264,8 +264,8 @@ function flaechenSeite(project, paper, landscape, blatt) {
   y += 12 * MM;
   const hinweise = [
     'Grundflächen aus den lichten Maßen zwischen den Wandoberflächen (Rohbau ohne Putzabzug, Fertigmaße bitte prüfen).',
-    'WoFlV § 4: lichte Höhe ab 2 m voll, 1–2 m zur Hälfte, unter 1 m nicht angerechnet; Balkone und Terrassen zu einem Viertel.',
-    'Treppen mit mehr als drei Steigungen und deren Podeste sind nach § 3 (3) nicht abzuziehen, wenn sie innerhalb des Raumes liegen — hier nicht abgezogen.',
+    'WoFlV § 4: lichte Höhe ab 2 m voll, 1-2 m zur Hälfte, unter 1 m nicht angerechnet; Balkone und Terrassen zu einem Viertel.',
+    'Treppen mit mehr als drei Steigungen und deren Podeste sind nach § 3 (3) nicht abzuziehen, wenn sie innerhalb des Raumes liegen, hier nicht abgezogen.',
   ];
   for (const h of hinweise) {
     text(ctx, h, x0, y, 7.5, { color: '#444' });
@@ -283,5 +283,5 @@ export function planPdf(project, { levels, scale = 100, paper = 'A3', landscape 
   const total = levels.length + (flaechen ? 1 : 0);
   levels.forEach((i, k) => pages.push(planSeite(project, i, { scale, paper, landscape, settings }, `${k + 1}/${total}`)));
   if (flaechen) pages.push(flaechenSeite(project, paper === 'A4' ? 'A4' : 'A4', true, `${total}/${total}`));
-  return buildPdf(pages, { title: `${project.name} — Grundrisse` });
+  return buildPdf(pages, { title: `${project.name}: Grundrisse` });
 }
