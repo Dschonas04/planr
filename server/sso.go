@@ -24,6 +24,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html"
 	"io"
 	"log"
 	"net/http"
@@ -678,11 +679,14 @@ h1{font-size:20px;margin:0 0 8px}a{color:#1b6ec2}
 }
 
 func ssoHTML(s string) string {
-	return strings.NewReplacer("&", "&amp;", "<", "&lt;", ">", "&gt;", `"`, "&quot;").Replace(s)
+	return html.EscapeString(s)
 }
 
 // sicheresZiel lässt nur Pfade dieser App zu, keine fremden Adressen.
 func ssoZiel(z string) string {
+	if len(z) > 1 && (z[1] == '/' || z[1] == '\\') {
+		return ""
+	}
 	if !strings.HasPrefix(z, "/") || strings.HasPrefix(z, "//") || strings.HasPrefix(z, "/sso/") ||
 		strings.ContainsAny(z, "\\\r\n\t") || len(z) > 2000 {
 		return ""
