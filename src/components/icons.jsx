@@ -60,12 +60,7 @@ export const IconRedo = () => (
   </svg>
 );
 
-export const IconLogo = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
-    <rect x="2" y="2.5" width="16" height="15" rx="1.5" />
-    <path d="M10 2.5v15M2 10h8" />
-  </svg>
-);
+export const IconLogo = () => <img src="/favicon.svg" width="20" height="20" alt="" />;
 
 export const IconStair = () => (
   <svg {...base}>
