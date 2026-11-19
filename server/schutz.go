@@ -114,22 +114,58 @@ func (b *Bremse) aufraeumen() {
 }
 
 // clientIP nimmt X-Forwarded-For nur ernst, wenn der Dienst ausdruecklich
-// hinter einem Proxy steht. Sonst koennte jeder die Bremse umgehen, indem er
-// den Kopf selbst setzt.
+// hinter einem Proxy steht und die Anfrage von dort (privates Netz) kommt.
+// Sonst koennte jeder die Bremse umgehen, indem er den Kopf selbst setzt.
+//
+// Die Liste wird von rechts gelesen: jeder eigene Proxy haengt hinten an, von
+// wem er die Anfrage bekam. Die erste oeffentliche Adresse von rechts ist der
+// Besucher; was links davon steht, hat er womoeglich selbst geschrieben.
+// X-Real-IP wird nicht mehr beachtet, das kann ebenfalls der Besucher setzen.
 func (s *server) clientIP(r *http.Request) string {
-	if s.cfg.hinterProxy {
-		if xff := r.Header.Get("X-Forwarded-For"); xff != "" {
-			return strings.TrimSpace(strings.Split(xff, ",")[0])
-		}
-		if xr := r.Header.Get("X-Real-IP"); xr != "" {
-			return strings.TrimSpace(xr)
-		}
-	}
 	host, _, err := net.SplitHostPort(r.RemoteAddr)
 	if err != nil {
-		return r.RemoteAddr
+		host = r.RemoteAddr
 	}
-	return host
+	if !s.cfg.hinterProxy {
+		return host
+	}
+	return echteIP(host, r.Header.Values("X-Forwarded-For"))
+}
+
+func echteIP(direkt string, xff []string) string {
+	d := net.ParseIP(direkt)
+	if d == nil || !internIP(d) {
+		return direkt
+	}
+	var kette []net.IP
+	for _, zeile := range xff {
+		for _, teil := range strings.Split(zeile, ",") {
+			teil = strings.TrimSpace(teil)
+			if h, _, err := net.SplitHostPort(teil); err == nil {
+				teil = h
+			}
+			ip := net.ParseIP(strings.Trim(teil, "[]"))
+			if ip == nil {
+				// Unsinn im Kopf: links davon ist nichts mehr glaubwuerdig.
+				kette = kette[:0]
+				continue
+			}
+			kette = append(kette, ip)
+		}
+	}
+	for i := len(kette) - 1; i >= 0; i-- {
+		if !internIP(kette[i]) {
+			return kette[i].String()
+		}
+	}
+	if len(kette) > 0 {
+		return kette[0].String()
+	}
+	return direkt
+}
+
+func internIP(ip net.IP) bool {
+	return ip.IsPrivate() || ip.IsLoopback() || ip.IsLinkLocalUnicast()
 }
 
 // istHTTPS entscheidet ueber das Secure-Attribut des Cookies.
